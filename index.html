@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1a0a2e">
+  <title>DEALERZ — Pre-Alpha</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════ CONSOLE BODY -->
+  <div id="console-body">
+
+    <!-- Brand label -->
+    <div id="console-brand">
+      <span class="brand-text">DEALERZ</span>
+      <span class="brand-sub">™ PRE-ALPHA</span>
+    </div>
+
+    <!-- ── Main game screen ────────────────────────────────────────────── -->
+    <div id="screen-container">
+      <div id="screen-bezel">
+        <div id="screen-scanlines"></div>
+        <canvas id="game-canvas" width="640" height="480"></canvas>
+      </div>
+    </div>
+
+    <!-- Speaker grille dots (decorative) -->
+    <div id="speaker-grille" aria-hidden="true">
+      <div class="grille-col">
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+      </div>
+      <div class="grille-col">
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+      </div>
+      <div class="grille-col">
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+      </div>
+      <div class="grille-col">
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+        <div class="grille-dot"></div><div class="grille-dot"></div>
+      </div>
+    </div>
+
+    <!-- ── Controls row ────────────────────────────────────────────────── -->
+    <div id="controls-row">
+
+      <!-- Left: D-pad / Joystick -->
+      <div id="left-controls">
+        <!-- D-pad -->
+        <div id="dpad" class="control-mode">
+          <div class="dpad-btn" id="dpad-up">▲</div>
+          <div class="dpad-row">
+            <div class="dpad-btn" id="dpad-left">◀</div>
+            <div class="dpad-center"></div>
+            <div class="dpad-btn" id="dpad-right">▶</div>
+          </div>
+          <div class="dpad-btn" id="dpad-down">▼</div>
+        </div>
+
+        <!-- Joystick (hidden by default) -->
+        <div id="joystick-container" class="control-mode hidden">
+          <div id="joystick-base">
+            <div id="joystick-thumb"></div>
+          </div>
+        </div>
+
+        <!-- Toggle button -->
+        <button id="toggle-control" class="small-btn" title="Przełącz sterowanie">⇄</button>
+      </div>
+
+      <!-- Middle: Mini screen + SELECT/START -->
+      <div id="middle-controls">
+        <div id="mini-screen-container">
+          <canvas id="mini-screen" width="200" height="120"></canvas>
+        </div>
+        <div id="select-start">
+          <button id="btn-select" class="sys-btn">SEL</button>
+          <button id="btn-start"  class="sys-btn">STA</button>
+        </div>
+      </div>
+
+      <!-- Right: A/B buttons -->
+      <div id="right-controls">
+        <div id="ab-buttons">
+          <div class="ab-row">
+            <button id="btn-b" class="action-btn b-btn">B</button>
+            <button id="btn-a" class="action-btn a-btn">A</button>
+          </div>
+          <div class="btn-labels">
+            <span class="btn-label">ucieczka</span>
+            <span class="btn-label">akcja</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /controls-row -->
+
+    <!-- Bottom brand stripe -->
+    <div id="console-footer">
+      <div class="footer-dot neon-pink"></div>
+      <div class="footer-dot neon-cyan"></div>
+      <div class="footer-dot neon-green"></div>
+      <span class="footer-text">STREET EDITION</span>
+      <div class="footer-dot neon-pink"></div>
+      <div class="footer-dot neon-cyan"></div>
+      <div class="footer-dot neon-green"></div>
+    </div>
+
+  </div><!-- /console-body -->
+
+  <!-- ═══════════════════════════════════════════════════════ OVERLAYS -->
+  <div id="overlay" class="hidden">
+
+    <!-- Start screen -->
+    <div id="screen-start" class="overlay-screen active">
+      <div class="overlay-glitch" data-text="DEALERZ">DEALERZ</div>
+      <div class="overlay-subtitle">PRE-ALPHA v0.1</div>
+      <div class="overlay-tagline">Uliczne życie w neonowym mieście</div>
+      <div class="overlay-controls-hint">
+        <p>WASD / Strzałki — ruch</p>
+        <p>Z — akcja &nbsp;&nbsp; X — ucieczka/odpoczynek</p>
+        <p>Q — zmień towar &nbsp;&nbsp; ESC — pauza</p>
+      </div>
+      <button class="overlay-btn pulse" id="btn-start-game">▶ ZACZNIJ GRĘ</button>
+    </div>
+
+    <!-- Base selection -->
+    <div id="screen-base-select" class="overlay-screen">
+      <div class="overlay-title">WYBIERZ BAZĘ</div>
+      <div class="overlay-subtitle">Twój dom, twoja twierdza</div>
+      <div id="base-options"></div>
+    </div>
+
+    <!-- Busted -->
+    <div id="screen-busted" class="overlay-screen">
+      <div class="overlay-title busted">ZGARNIĘTY!</div>
+      <div class="overlay-subtitle">Trafiłeś do pierdla, kolego.</div>
+      <div id="busted-stats" class="stats-block"></div>
+      <div class="overlay-tagline">Crypto zostało — nie wszystko stracone.</div>
+      <button class="overlay-btn" id="btn-after-busted">🚪 WYJDŹ NA WOLNOŚĆ</button>
+    </div>
+
+    <!-- Win -->
+    <div id="screen-win" class="overlay-screen">
+      <div class="overlay-title win">🏆 WYGRAŁEŚ</div>
+      <div class="overlay-subtitle">Osiągnąłeś $1,000,000!</div>
+      <div class="overlay-tagline">Czyste ręce. Brudne pieniądze. Idealne życie.</div>
+      <button class="overlay-btn" id="btn-restart">↺ NOWA GRA</button>
+    </div>
+
+    <!-- Pause -->
+    <div id="screen-pause" class="overlay-screen">
+      <div class="overlay-title">⏸ PAUZA</div>
+      <div class="overlay-subtitle">Oddech na chwilę...</div>
+      <button class="overlay-btn" id="btn-resume">▶ WRÓĆ DO GRY</button>
+      <button class="overlay-btn secondary" id="btn-restart-pause">↺ NOWA GRA</button>
+    </div>
+
+  </div><!-- /overlay -->
+
+  <script type="module" src="src/game.js"></script>
+</body>
+</html>
